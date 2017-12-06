@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  div(id="root") hello wedaren
+  ul(id="messages")
+    form(action="")
+      input(id="m" autocomplete="off")
+      button Send
+  script.
+    $(function () {
+      var socket = io();
+      $('form').submit(function(){
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+      });
+    });
