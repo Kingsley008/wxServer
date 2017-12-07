@@ -12,8 +12,14 @@ const Park = require('../../models/Park');
  *  1. 判断 park_stall 是否存在 不存在返回 result: 0
  *  2. 存在 生成一个预订单
  * **/
-// TODO order_id 自增长
+
 let nextId = 0;
+
+// 从数据库中得到最后一个id
+Order.find().sort({'order_id': -1}).then((res)=>{
+    nextId = res[0].order_id;
+});
+
 router.get('/', (req, res) => {
     const open_id = req.query.open_id;
     const stall_code = req.query.stall_code;

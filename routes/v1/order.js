@@ -3,7 +3,6 @@ const router = express.Router();
 const Order = require('../../models/Order');
 const Tmote = require('../../models/TMoteStatus');
 
-
 /**
  * params：
  *
@@ -19,24 +18,25 @@ router.get('/',(req, res) => {
     let duration = 0;
     let cost = 0; // 单位/分
     let minutes = 0;
+
     console.log(sensor_code, order_id);
     // TODO 先不考虑用户不立即付费的情况
     Tmote.findOne({SN:sensor_code})
         .then((ret)=>{
             // 车未开出 结算订单无效
             console.log(ret.Status);
-            let status = ret.Status;
-             status = 0;  // 测试
+            let status = ret.Status; // 1有车  0 没车
             if(status){
-                res.status(200).json({ret:0,message:'请确认您的车已开出车位'})
+                // ret 0 有车
+                res.status(200).json({ret:0})
 
             } else {
                 // 更新菜单
                 const end = ret.hData[0].TimeTermine;
                 duration = ret.hData[0].OccupyTime;
                 if(duration !== 0){
-                    minutes = duration / 1000 / 60;
-                    cost = Math.ceil((duration / 1000 / 60) * 100); // 以分为单位  测试：1元1分钟
+                    minutes = Math.ceil(duration / 1000 / 60);
+                    cost = Math.ceil(minutes * 100); // 以分为单位  测试：1元1分钟
                 }else{
                     res.status(200).json({ret:0,message:'程序处理异常，请报错'})
                 }

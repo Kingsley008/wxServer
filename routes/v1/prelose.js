@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     const time = req.query.time;
     console.log(time);
     Order.update({order_id: order_id},{
-        '$set':{'start': time }
+        '$set':{'start': time , 'is_normal':false}
     },{multi: true},function (err,docs) {
         if(err){
             res.status(200).json({ret:0});

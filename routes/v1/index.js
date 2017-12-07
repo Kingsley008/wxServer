@@ -5,6 +5,8 @@ let markers = require('./markers');
 let preorder = require('./preorder');
 let sensor  = require('./order');
 let prelose = require('./prelose');
+let endlose = require('./endlose');
+let orderdone = require('./orderdone');
 let router = express.Router();
 
 router.use('/user',user);
@@ -18,5 +20,9 @@ router.use('/preorder', preorder);
 router.use('/order', sensor);
 
 router.use('/prelose', prelose);
+
+router.use('/endlose', endlose);
+
+router.use('/orderdone', orderdone);
 
 module.exports = router;
