@@ -45,9 +45,9 @@ router.get('/', (req, res) => {
                         // console.log(sensor_code);
                         TMoteStatus.findOne({SN: sensor_code})
                             .then((ret) => {
-                                // 确认当前的车是否已经停进了车位
-                                if(ret.Status){
-                                    //  考虑进入车位丢包 丢包了 返回 0  让前端处理开始时间
+                                // 确认当前的车是否已经停进了车位 1 有车  0 无车
+                                if(!ret.Status){
+                                    //  考虑进入车位 但是 地磁状态为 0 丢包 丢包了 返回 0  让前端处理开始时间
                                     let _order = {
                                         order_id: ++nextId,
                                         open_id: open_id,

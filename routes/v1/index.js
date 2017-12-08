@@ -7,6 +7,7 @@ let sensor  = require('./order');
 let prelose = require('./prelose');
 let endlose = require('./endlose');
 let orderdone = require('./orderdone');
+let singlelose = require('./singlelose');
 let router = express.Router();
 
 router.use('/user',user);
@@ -24,5 +25,7 @@ router.use('/prelose', prelose);
 router.use('/endlose', endlose);
 
 router.use('/orderdone', orderdone);
+
+router.use('/singlelose', singlelose);
 
 module.exports = router;
